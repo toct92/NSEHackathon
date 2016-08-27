@@ -19,8 +19,8 @@ contract Authority {
         }
         else if(etherGot > identityPrice)
         {
-            var weiToReturn = identityPrice - etherGot;
-            if(!msg.sender.send(weiToReturn)){
+            var balance = identityPrice - etherGot;
+            if(!msg.sender.send(balance)){
               throw;
             }
             identities[msg.sender]["status"] = "Pending";
