@@ -1,17 +1,17 @@
 contract Authority {
     mapping(address => address[]) private accesses;
     mapping (address => mapping (string => string)) private identities;
-    
+
     uint256 public identityPrice;
     address public owner;
-    
+
     function createIdentity() returns(bool _result)
     {
-        //1000000000000000000 = 1 
+        //1000000000000000000 = 1
         //
-        
+
         var etherGot = msg.value;
-        
+
         if(etherGot == identityPrice)
         {
             identities[msg.sender]["status"] = "Pending";
@@ -20,7 +20,9 @@ contract Authority {
         else if(etherGot > identityPrice)
         {
             var weiToReturn = identityPrice - etherGot;
-            msg.sender.send(weiToReturn);
+            if(!msg.sender.send(weiToReturn)){
+              throw;
+            }
             identities[msg.sender]["status"] = "Pending";
             return true;
         }
@@ -28,9 +30,9 @@ contract Authority {
         {
             return false;
         }
-        
+
     }
-    
+
     function processIdentity(address addressOfPerson, string key, string value) returns(bool _result)
     {
         if(owner == msg.sender)
@@ -43,16 +45,16 @@ contract Authority {
             return false;
         }
     }
-    
+
     function giveAuthorization(address thirdParty)
     {
-        accesses[msg.sender][accesses[msg.sender].length] = thirdParty; 
+        accesses[msg.sender][accesses[msg.sender].length] = thirdParty;
     }
-    
+
     function getIdentity(address user, string key) returns(string result)
     {
         var apps = accesses[user];
-        
+
         for(uint256 i = 0; i < apps.length; i++)
         {
             if(msg.sender == apps[i])
@@ -61,12 +63,12 @@ contract Authority {
             }
         }
     }
-    
+
     function changeIdentityPrice(uint256 _identityPrice) returns(bool _result)
     {
         if(owner == msg.sender)
         {
-            
+
             identityPrice = _identityPrice;
             return true;
         }
@@ -75,7 +77,7 @@ contract Authority {
             return false;
         }
     }
-    
+
     function Authority(uint256 _identityPrice)
     {
         //set the price in wei unit
