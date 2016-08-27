@@ -2,15 +2,32 @@ contract Authority {
     mapping(address => address[]) private accesses;
     mapping (address => mapping (string => string)) private identities;
     
-    int public identityPrice;
+    uint256 public identityPrice;
     address public owner;
     
-    function createIdentity()
+    function createIdentity() returns(bool _result)
     {
         //1000000000000000000 = 1 
         //
         
         var etherGot = msg.value;
+        
+        if(etherGot == identityPrice)
+        {
+            identities[msg.sender]["status"] = "Pending";
+            return true;
+        }
+        else if(etherGot > identityPrice)
+        {
+            var weiToReturn = identityPrice - etherGot;
+            msg.sender.send(weiToReturn);
+            identities[msg.sender]["status"] = "Pending";
+            return true;
+        }
+        else
+        {
+            return false;
+        }
         
     }
     
@@ -27,20 +44,29 @@ contract Authority {
         }
     }
     
-    function giveAuthorization()
+    function giveAuthorization(address thirdParty)
     {
-        
+        accesses[msg.sender][accesses[msg.sender].length] = thirdParty; 
     }
     
-    function getIdentity()
+    function getIdentity(address user, string key) returns(string result)
     {
+        var apps = accesses[user];
         
+        for(uint256 i = 0; i < apps.length; i++)
+        {
+            if(msg.sender == apps[i])
+            {
+                return identities[user][key];
+            }
+        }
     }
     
-    function changeIdentityPrice(int _identityPrice) returns(bool _result)
+    function changeIdentityPrice(uint256 _identityPrice) returns(bool _result)
     {
         if(owner == msg.sender)
         {
+            
             identityPrice = _identityPrice;
             return true;
         }
@@ -50,7 +76,7 @@ contract Authority {
         }
     }
     
-    function Authority(int _identityPrice)
+    function Authority(uint256 _identityPrice)
     {
         //set the price in wei unit
         identityPrice = _identityPrice;
