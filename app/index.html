@@ -1,22 +1,137 @@
-<!DOCTYPE html>
 <html>
 <head>
-  <title>MetaCoin - Default Truffle App</title>
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-  <link href="./app.css" rel='stylesheet' type='text/css'>
-  <script src="./app.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css" integrity="sha384-MIwDKRSSImVFAZCVLtU0LMDdON6KVCrZHyVQQj6e8wIEJkW4tvwqXrbMIya1vriY" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js" integrity="sha384-ux8v3A6CPtOTqOzMKiuo3d/DomGaaClxFYdCu2HPMBEkf6x2xiDyJ7gkXU0MWwaD" crossorigin="anonymous"></script>
+<link href="./app.css" rel='stylesheet' type='text/css'>
+<script src="./app.js"></script>
 </head>
-<body>
-  <h1>MetaCoin</h1>
-  <h2>Example Truffle Dapp</h2>
-  <h3>You have <span class="black"><span id="balance"></span> META</span></h3>
+<body style="background:#e6f3ff" style="font-size:10px;">
 
-  <br>
-  <h1>Send</h1>
-  <br><label for="amount">Amount:</label><input type="text" id="amount" placeholder="e.g., 95"></input>
-  <br><label for="receiver">To Address:</label><input type="text" id="receiver" placeholder="e.g., 0x93e66d9baea28c17d9fc393b53e3fbdd76899dae"></input>
-  <br><br><button id="send" onclick="sendCoin()">Send MetaCoin</button>
-  <br><br>
-  <span id="status"></span>
+<ul class="nav nav-tabs" role="tablist" style="border-bottom: 2px solid; border-color:#0077e6;">
+  <li class="nav-item" style="border-bottom: 1px solid; border-color:#0077e6;">
+    <a class="nav-link active" href="#entry" role="tab" data-toggle="tab">User Profile</a>
+  </li>
+  <li class="nav-item" style="border-bottom: 1px solid; border-color:#0077e6;">
+    <a class="nav-link" href="#query" role="tab" data-toggle="tab">Grant Data Access</a>
+  </li>
+
+</ul>
+
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane fade in active" id="entry">
+	<div class="container">
+		<center><h5><br>USER PROFILE</h5></center><hr>
+
+		<form class="form-inline">
+			<div class="row" style="padding:5px;">
+
+			<div class="col-lg-6">
+				<div class="col-lg-4"> <label for="asas">User Wallet Address</div>
+				<div class="col-lg-8"><input type="text" class="form-control form-control-sm" id="asa" placeholder="User Wallet Address ">
+			</div>
+			<div class="col-lg-6">
+				</div>
+			</div>
+			</div>
+			 <div class="row" style="padding:5px;">
+			<div class="col-lg-6">
+				<div class="col-lg-4"> <label for="category">ID Type</label></div>
+				<div class="col-lg-8">
+					<select id="category" class="form-control form-control-sm">
+					<option value="NAME">NAME</option>
+						<option value="DOB">DOB</option>
+						<option value="MOBILE">MOBILE</option>
+						<option value="EMAIL">EMAIL</option>
+						<option value="PAN">PAN</option>
+						<option value="AADHAR">AADHAR</option>
+						<option value="PAN">PAN</option>
+						<option value="DRIV LICENSE">DRIVER'S LICENSE</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="col-lg-6">
+				<div class="col-lg-4"> <label for="description">ID No.</label></div>
+				<div class="col-lg-8"><input type="text" class="form-control form-control-sm" id="description" placeholder="Category Description">
+			</div>
+			</div>
+	</div>
+
+
+
+
+
+
+
+</form>
+			<button class="btn btn-success pull-xs-right btn-sm" id="addRow">ADD</button><br><br>
+
+
+  <div class="table-responsive " id="customgrid">
+  <table class="table table-inverse table-sm" style="margin-bottom:20px">
+    <tbody id="customrow">
+	</tbody>
+  </table>
+  </div>
+
+<br><br>
+<hr>
+<div class="row" style="padding:5px;">
+<div class="col-lg-6">
+				<div class="col-lg-4"> <label for="seed">Authority Seed</label></div>
+				<div class="col-lg-8"><input type="text" class="form-control form-control-sm" id="seed" placeholder="Authority Seed">
+			</div>
+	</div>
+
+	</div>
+  <button class="btn btn-primary btn-sm pull-xs-right " id="submit">Submit</button><br><br>
+
+</div>
+
+  </div>
+
+
+
+
+  <div role="tabpanel" class="tab-pane fade" id="query">
+	<div class="container">
+		<center><h4><br>GRANT DATA ACCESS</h4></center><hr>
+
+		<form class="form-inline">
+			<div class="row" style="padding:5px;">
+
+			<div class="col-lg-12">
+				<div class="col-lg-4"> <label for="asas">Third Party Wallet Address</div>
+				<div class="col-lg-8"><input type="text" class="form-control form-control-sm" id="asa" placeholder="Address ">
+			</div>
+
+			</div>
+			</div>
+			<div class="row" style="padding:5px;">
+<div class="col-lg-12">
+				<div class="col-lg-4"> <label for="seed">User Seed</label></div>
+				<div class="col-lg-8"><input type="text" class="form-control form-control-sm" id="seed" placeholder="User Seed">
+			</div>
+	</div>
+
+	</div>
+		</form>
+
+
+
+
+
+
+  <button class="btn btn-primary btn-sm pull-xs-right " id="submit">Submit</button><br><br>
+
+
+  </div>
+
+</div>
+
+
 </body>
 </html>
