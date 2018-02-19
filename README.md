@@ -27,5 +27,3 @@
 ### Known Issues
 * Spark blacklisted executor not respawned in EMR<br>https://trello.com/c/qiNr3tU6/394-spark-blacklisted-executor-not-respawned-in-emr
 
-### Deployment
-Using AWS Cloud formation in clean AWS environment
